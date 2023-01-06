@@ -6,6 +6,8 @@
 
 [3.数据库](#3.数据库)
 
+[4.字符串操作](#4.字符串操作)
+
 ## 1.web基础
 
 - Go实现Web服务的工作模式的流程图:
@@ -172,3 +174,97 @@ func login(w http.ResponseWriter, r *http.Request) {
   - stmt.Exec()函数用来执行stmt准备好的SQL语句
 
   - 我们可以看到我们传入的参数都是=?对应的数据，这样做的方式可以一定程度上防止SQL注入。
+
+## 4.字符串操作
+
+下面这些函数来自于strings包，这里介绍一些我平常经常用到的函数，更详细的请参考官方的文档。
+
+- func Contains(s, substr string) bool
+
+  字符串s中是否包含substr，返回bool值
+
+```go
+fmt.Println(strings.Contains("seafood", "foo"))
+fmt.Println(strings.Contains("seafood", "bar"))
+fmt.Println(strings.Contains("seafood", ""))
+fmt.Println(strings.Contains("", ""))
+//Output:
+//true
+//false
+//true
+//true
+```
+
+- func Join(a []string, sep string) string
+
+  字符串链接，把slice a通过sep链接起来
+
+```go
+s := []string{"foo", "bar", "baz"}
+fmt.Println(strings.Join(s, ", "))
+//Output:foo, bar, baz		
+```
+
+- func Index(s, sep string) int
+
+  在字符串s中查找sep所在的位置，返回位置值，找不到返回-1
+
+```go
+fmt.Println(strings.Index("chicken", "ken"))
+fmt.Println(strings.Index("chicken", "dmr"))
+//Output:4
+//-1
+```
+
+- func Repeat(s string, count int) string
+
+  重复s字符串count次，最后返回重复的字符串
+
+```go
+fmt.Println("ba" + strings.Repeat("na", 2))
+//Output:banana
+```
+
+- func Replace(s, old, new string, n int) string
+
+  在s字符串中，把old字符串替换为new字符串，n表示替换的次数，小于0表示全部替换
+
+```go
+fmt.Println(strings.Replace("oink oink oink", "k", "ky", 2))
+fmt.Println(strings.Replace("oink oink oink", "oink", "moo", -1))
+//Output:oinky oinky oink
+//moo moo moo
+```
+
+- func Split(s, sep string) []string
+
+  把s字符串按照sep分割，返回slice
+
+```go
+fmt.Printf("%q\n", strings.Split("a,b,c", ","))
+fmt.Printf("%q\n", strings.Split("a man a plan a canal panama", "a "))
+fmt.Printf("%q\n", strings.Split(" xyz ", ""))
+fmt.Printf("%q\n", strings.Split("", "Bernardo O'Higgins"))
+//Output:["a" "b" "c"]
+//["" "man " "plan " "canal panama"]
+//[" " "x" "y" "z" " "]
+//[""]
+```
+
+- func Trim(s string, cutset string) string
+
+  在s字符串的头部和尾部去除cutset指定的字符串
+
+```go
+fmt.Printf("[%q]", strings.Trim(" !!! Achtung !!! ", "! "))
+//Output:["Achtung"]
+```
+
+- func Fields(s string) []string
+
+  去除s字符串的空格符，并且按照空格分割返回slice
+
+```go
+fmt.Printf("Fields are: %q", strings.Fields("  foo bar  baz   "))
+//Output:Fields are: ["foo" "bar" "baz"]
+```
