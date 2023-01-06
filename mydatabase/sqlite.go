@@ -27,7 +27,7 @@ func Sqlite3() {
 	stmt, err = db.Prepare("update userinfo set username=? where uid=?")
 	CheckErr(err)
 
-	res, err = stmt.Exec("astaxieupdate", id)
+	res, err = stmt.Exec("LOUISupdate", id)
 	CheckErr(err)
 
 	affect, err := res.RowsAffected()
